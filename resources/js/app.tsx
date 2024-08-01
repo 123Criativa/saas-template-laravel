@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { RouteContext } from '@/Hooks/useRoute';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { LaravelReactI18nProvider } from 'laravel-react-i18n';
 import { ThemeProvider } from '@/Components/ThemeProvider';
 
 
@@ -27,7 +28,13 @@ createInertiaApp({
     return root.render(
       <RouteContext.Provider value={(window as any).route}>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <App {...props} />
+            <LaravelReactI18nProvider
+                locale={'pt_BR'}
+                fallbackLocale={'en'}
+                files={import.meta.glob('/lang/*.json')}
+            >
+                <App {...props} />
+            </LaravelReactI18nProvider>
         </ThemeProvider>
       </RouteContext.Provider>,
     );

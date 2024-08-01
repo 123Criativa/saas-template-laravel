@@ -10,10 +10,12 @@ import { Input } from '@/shadcn/ui/input';
 import { Button } from '@/shadcn/ui/button';
 import { Checkbox } from '@/shadcn/ui/checkbox';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shadcn/ui/card';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 export default function Register() {
   const page = useTypedPage();
   const route = useRoute();
+  const { t } = useLaravelReactI18n();
   const form = useForm({
     name: '',
     email: '',
@@ -31,24 +33,28 @@ export default function Register() {
 
   return (
     <AuthenticationCard>
-      <Head title="Register" />
+      <Head title={ t('Register') } />
 
       <form onSubmit={onSubmit}>
         <Card className="mx-auto max-w-sm">
           <CardHeader>
-            <CardTitle className="text-xl">Sign Up</CardTitle>
+            <CardTitle className="text-xl">
+                { t('Sign up') }
+            </CardTitle>
             <CardDescription>
-              Enter your information to create an account
+                { t('Enter your information to create an account') }
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name">
+                    { t('Name') }
+                </Label>
                 <Input
                   id="name"
                   type="text"
-                  placeholder="John Doe"
+                  placeholder={ t('Full Name') }
                   onChange={e => form.setData('name', e.currentTarget.value)}
                   value={form.data.name}
                   required
@@ -58,11 +64,13 @@ export default function Register() {
                 <InputError className="mt-2" message={form.errors.name} />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">
+                    { t('Email') }
+                </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder={ t('myemail@example.com') }
                   onChange={e => form.setData('email', e.currentTarget.value)}
                   value={form.data.email}
                   required
@@ -70,7 +78,9 @@ export default function Register() {
                 <InputError className="mt-2" message={form.errors.email} />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">
+                    { t('Password') }
+                </Label>
                 <Input
                   id="password"
                   type="password"
@@ -83,7 +93,7 @@ export default function Register() {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="password_confirmation">
-                  Retype Password
+                    { t('Retype Password') }
                 </Label>
                 <Input
                   id="password_confirmation"
@@ -110,28 +120,27 @@ export default function Register() {
                         id="terms"
                         checked={form.data.terms}
                         onCheckedChange={e => {
-                          console.log(e);
                           form.setData('terms', e.valueOf() as boolean);
                         }}
                         required
                       />
 
                       <div className="ml-2">
-                        I agree to the
+                          { t('I agree to the') }
                         <a
                           target="_blank"
                           href={route('terms.show')}
                           className="ml-1 mr-1 underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                         >
-                          Terms
+                            { t('Terms') }
                         </a>
-                        and
+                          { t('and') }
                         <a
                           target="_blank"
                           href={route('policy.show')}
                           className="ml-1 underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                         >
-                          Privacy Policy
+                            { t('Privacy Policy') }
                         </a>
                       </div>
                     </div>
@@ -141,13 +150,13 @@ export default function Register() {
               )}
 
               <Button type="submit" className="w-full">
-                Create an account
+                  { t('Create an account') }
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Already have an account?{' '}
-              <Link href="/login" className="underline">
-                Sign in
+                { t('Already have an account?') }{' '}
+              <Link href={route('login')} className="underline">
+                  { t('Sign in') }
               </Link>
             </div>
           </CardContent>

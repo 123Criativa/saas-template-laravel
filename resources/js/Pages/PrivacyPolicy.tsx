@@ -1,15 +1,18 @@
 import React from 'react';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo';
 import { Head } from '@inertiajs/react';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   policy: string;
 }
 
 export default function PrivacyPolicy({ policy }: Props) {
+  const { t } = useLaravelReactI18n();
+
   return (
     <div>
-      <Head title="Privacy Policy" />
+      <Head title={ t('Privacy Policy') } />
 
       <div className="font-sans text-gray-900 dark:text-gray-100 antialiased">
         <div className="pt-4 bg-gray-100 dark:bg-gray-900">

@@ -1,15 +1,18 @@
 import React from 'react';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo';
 import { Head } from '@inertiajs/react';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   terms: string;
 }
 
 export default function TermsOfService({ terms }: Props) {
+  const { t } = useLaravelReactI18n();
+
   return (
     <div className="font-sans text-gray-900 dark:text-gray-100 antialiased">
-      <Head title="Terms of Service" />
+      <Head title={ t('Terms of Service') } />
 
       <div className="pt-4 bg-gray-100 dark:bg-gray-900">
         <div className="min-h-screen flex flex-col items-center pt-6 sm:pt-0">

@@ -9,6 +9,7 @@ import React from 'react';
 import { Label } from '@/shadcn/ui/label';
 import { Input } from '@/shadcn/ui/input';
 import { Button } from '@/shadcn/ui/button';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   team: Team & { owner: User };
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export default function UpdateTeamNameForm({ team, permissions }: Props) {
+  const { t } = useLaravelReactI18n();
   const route = useRoute();
   const form = useForm({
     name: team.name,
@@ -31,21 +33,21 @@ export default function UpdateTeamNameForm({ team, permissions }: Props) {
   return (
     <FormSection
       onSubmit={updateTeamName}
-      title={'Team Name'}
-      description={`The team's name and owner information.`}
+      title={t('Team Name')}
+      description={ t(`The team's name and owner information.`) }
       renderActions={
         permissions.canUpdateTeam
           ? () => (
             <>
               <ActionMessage on={form.recentlySuccessful} className="mr-3">
-                Saved.
+                  { t('Saved.') }
               </ActionMessage>
 
               <Button
                 className={classNames({ 'opacity-25': form.processing })}
                 disabled={form.processing}
               >
-                Save
+                  { t('Save') }
               </Button>
             </>
           )
@@ -54,7 +56,9 @@ export default function UpdateTeamNameForm({ team, permissions }: Props) {
     >
       {/* <!-- Team Owner Information --> */}
       <div className="col-span-6">
-        <Label>Team Owner</Label>
+        <Label>
+            { t('Team Owner') }
+        </Label>
 
         <div className="flex items-center mt-2">
           <img
@@ -76,7 +80,9 @@ export default function UpdateTeamNameForm({ team, permissions }: Props) {
 
       {/* <!-- Team Name --> */}
       <div className="col-span-6 sm:col-span-4">
-        <Label htmlFor="name">Team Name</Label>
+        <Label htmlFor="name">
+            { t('Team Name') }
+        </Label>
 
         <Input
           id="name"

@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/sha
 import { Label } from '@/shadcn/ui/label';
 import { Input } from '@/shadcn/ui/input';
 import { Button } from '@/shadcn/ui/button';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   canResetPassword: boolean;
@@ -21,6 +22,8 @@ export default function Login({ canResetPassword, status }: Props) {
     remember: '',
   });
 
+  const { t } = useLaravelReactI18n();
+
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     form.post(route('login'), {
@@ -30,14 +33,16 @@ export default function Login({ canResetPassword, status }: Props) {
 
   return (
     <AuthenticationCard>
-      <Head title="Log in" />
+      <Head title= { t('Log in') } />
 
       <form onSubmit={onSubmit}>
         <Card className="mx-auto max-w-sm">
           <CardHeader>
-            <CardTitle className="text-2xl">Login</CardTitle>
+            <CardTitle className="text-2xl">
+                { t('Login') }
+            </CardTitle>
             <CardDescription>
-              Enter your email below to login to your account
+                { t('Enter your email below to login to your account') }
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -49,11 +54,13 @@ export default function Login({ canResetPassword, status }: Props) {
 
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">
+                    { t('Email') }
+                </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="m@example.com"
+                  placeholder={ t('myemail@example.com') }
                   value={form.data.email}
                   onChange={e => form.setData('email', e.currentTarget.value)}
                   required
@@ -62,12 +69,14 @@ export default function Login({ canResetPassword, status }: Props) {
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">
+                      { t('Password') }
+                  </Label>
                   <Link
                     href={route('password.request')}
                     className="ml-auto inline-block text-sm underline"
                   >
-                    Forgot your password?
+                      { t('Forgot your password?') }
                   </Link>
                 </div>
                 <Input
@@ -80,13 +89,13 @@ export default function Login({ canResetPassword, status }: Props) {
                 />
                 <InputError className="mt-2" message={form.errors.password} /></div>
               <Button type="submit" className="w-full">
-                Login
+                  { t('Log in') }
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{' '}
-              <Link href="/register" className="underline">
-                Sign up
+                { t('Don\'t have an account?') }{' '}
+              <Link href={route('register')} className="underline">
+                  { t('Sign up') }
               </Link>
             </div>
           </CardContent>

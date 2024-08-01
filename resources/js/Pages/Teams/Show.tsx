@@ -5,6 +5,7 @@ import SectionBorder from '@/Components/SectionBorder';
 import AppLayout from '@/Layouts/AppLayout';
 import { JetstreamTeamPermissions, Role, Team, TeamInvitation, User } from '@/types';
 import React from 'react';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface UserMembership extends User {
   membership: {
@@ -23,12 +24,13 @@ interface Props {
 }
 
 export default function Show({ team, availableRoles, permissions }: Props) {
+  const { t } = useLaravelReactI18n();
   return (
     <AppLayout
-      title="Team Settings"
+      title={ t('Team Settings') }
       renderHeader={() => (
         <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          Team Settings
+            { t('Team Settings') }
         </h2>
       )}
     >

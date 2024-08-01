@@ -11,12 +11,14 @@ import useTypedPage from '@/Hooks/useTypedPage';
 import { Label } from '@/shadcn/ui/label';
 import { Input } from '@/shadcn/ui/input';
 import { Button } from '@/shadcn/ui/button';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   user: User;
 }
 
 export default function UpdateProfileInformationForm({ user }: Props) {
+  const { t } = useLaravelReactI18n();
   const form = useForm({
     _method: 'PUT',
     name: user.name,
@@ -79,15 +81,17 @@ export default function UpdateProfileInformationForm({ user }: Props) {
   return (
     <FormSection
       onSubmit={updateProfileInformation}
-      title={'Profile Information'}
-      description={`Update your account's profile information and email address.`}
+      title={ t('Profile Information') }
+      description={ t(`Update your account's profile information and email address.`) }
       renderActions={() => (
         <>
           <ActionMessage on={form.recentlySuccessful} className="mr-3">
-            Saved.
+              { t('Saved.') }
           </ActionMessage>
 
-          <Button disabled={form.processing}>Save</Button>
+          <Button disabled={form.processing}>
+              { t('Save') }
+          </Button>
         </>
       )}
     >
@@ -102,7 +106,7 @@ export default function UpdateProfileInformationForm({ user }: Props) {
             onChange={updatePhotoPreview}
           />
 
-          <InputLabel htmlFor="photo" value="Photo" />
+          <InputLabel htmlFor="photo" value={ t('Photo') } />
 
           {photoPreview ? (
             // <!-- New Profile Photo Preview -->
@@ -134,7 +138,7 @@ export default function UpdateProfileInformationForm({ user }: Props) {
             type="button"
             onClick={selectNewPhoto}
           >
-            Select A New Photo
+              { t('Select A New Photo') }
           </Button>
 
           {user.profile_photo_path ? (
@@ -144,7 +148,7 @@ export default function UpdateProfileInformationForm({ user }: Props) {
               className="mt-2"
               onClick={deletePhoto}
             >
-              Remove Photo
+                { t('Remove Photo') }
             </Button>
           ) : null}
 
@@ -154,7 +158,9 @@ export default function UpdateProfileInformationForm({ user }: Props) {
 
       {/* <!-- Name --> */}
       <div className="col-span-6 sm:col-span-4">
-        <Label htmlFor="name">Name</Label>
+        <Label htmlFor="name">
+            { t('Name') }
+        </Label>
 
         <Input
           id="name"
@@ -169,7 +175,9 @@ export default function UpdateProfileInformationForm({ user }: Props) {
 
       {/* <!-- Email --> */}
       <div className="col-span-6 sm:col-span-4">
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">
+            { t('Email') }
+        </Label>
 
         <Input
           id="email"
@@ -186,7 +194,7 @@ export default function UpdateProfileInformationForm({ user }: Props) {
         user.email_verified_at === null ? (
           <div>
             <p className="text-sm mt-2 dark:text-white">
-              Your email address is unverified.
+                { t('Your email address is unverified.') }
               <Link
                 href={route('verification.send')}
                 method="post"
@@ -196,12 +204,12 @@ export default function UpdateProfileInformationForm({ user }: Props) {
                   setVerificationLinkSent(true);
                 }}
               >
-                Click here to re-send the verification email.
+                  { t('Click here to re-send the verification email.') }
               </Link>
             </p>
             {verificationLinkSent && (
               <div className="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
-                A new verification link has been sent to your email address.
+                  { t('A new verification link has been sent to your email address.') }
               </div>
             )}
           </div>

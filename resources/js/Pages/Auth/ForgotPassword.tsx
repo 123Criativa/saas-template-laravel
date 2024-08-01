@@ -6,6 +6,7 @@ import InputError from '@/Components/InputError';
 import { Input } from '@/shadcn/ui/input';
 import { Button } from '@/shadcn/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/shadcn/ui/card';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   status: string;
@@ -13,6 +14,7 @@ interface Props {
 
 export default function ForgotPassword({ status }: Props) {
   const route = useRoute();
+  const { t } = useLaravelReactI18n();
   const form = useForm({
     email: '',
   });
@@ -24,15 +26,13 @@ export default function ForgotPassword({ status }: Props) {
 
   return (
     <AuthenticationCard>
-      <Head title="Forgot Password" />
+      <Head title={ t('Forgot Password') } />
 
       <form onSubmit={onSubmit}>
         <Card>
           <CardHeader>
             <CardDescription>
-              Forgot your password? No problem. Just let us know
-              your email address and we will email you a password
-              reset link that will allow you to choose a new one.
+                { t('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -45,7 +45,7 @@ export default function ForgotPassword({ status }: Props) {
               id="email"
               type="email"
               name="email"
-              placeholder="Your email"
+              placeholder={ t('Your email') }
               value={form.data.email}
               onChange={e => form.setData('email', e.currentTarget.value)}
               autoFocus
@@ -56,7 +56,7 @@ export default function ForgotPassword({ status }: Props) {
 
           <CardFooter className="flex justify-end">
             <Button disabled={form.processing}>
-              Email Password Reset Link
+                { t('Email Password Reset Link') }
             </Button>
           </CardFooter>
         </Card>

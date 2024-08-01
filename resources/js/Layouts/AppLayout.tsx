@@ -13,6 +13,7 @@ import { Team } from '@/types';
 import { ModeToggle } from '@/Components/ModeToggle';
 import { useTheme } from '@/Components/ThemeProvider';
 import ApplicationMark from '@/Components/ApplicationMark';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   title: string;
@@ -26,7 +27,7 @@ export default function AppLayout({
                                     children,
                                   }: PropsWithChildren<Props>) {
   const { theme } = useTheme();
-
+  const { t } = useLaravelReactI18n();
   const page = useTypedPage();
   const route = useRoute();
   const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -78,7 +79,7 @@ export default function AppLayout({
                     href={route('dashboard')}
                     active={route().current('dashboard')}
                   >
-                    Dashboard
+                      { t('Dashboard') }
                   </NavLink>
                 </div>
               </div>
@@ -119,7 +120,7 @@ export default function AppLayout({
                         {page.props.jetstream.hasTeamFeatures ? (
                           <>
                             <div className="block px-4 py-2 text-xs text-gray-400">
-                              Manage Team
+                                { t('Manage Team') }
                             </div>
 
                             {/* <!-- Team Settings --> */}
@@ -128,12 +129,12 @@ export default function AppLayout({
                                 page.props.auth.user?.current_team!,
                               ])}
                             >
-                              Team Settings
+                                { t('Team Settings') }
                             </DropdownLink>
 
                             {page.props.jetstream.canCreateTeams ? (
                               <DropdownLink href={route('teams.create')}>
-                                Create New Team
+                                  { t('Create New Team') }
                               </DropdownLink>
                             ) : null}
 
@@ -141,7 +142,7 @@ export default function AppLayout({
 
                             {/* <!-- Team Switcher --> */}
                             <div className="block px-4 py-2 text-xs text-gray-400">
-                              Switch Teams
+                                { t('Switch Teams') }
                             </div>
 
                             {page.props.auth.user?.all_teams?.map(team => (
@@ -219,16 +220,16 @@ export default function AppLayout({
                   >
                     {/* <!-- Account Management --> */}
                     <div className="block px-4 py-2 text-xs text-gray-400">
-                      Manage Account
+                        { t('Manage Account') }
                     </div>
 
                     <DropdownLink href={route('profile.show')}>
-                      Profile
+                        { t('Profile') }
                     </DropdownLink>
 
                     {page.props.jetstream.hasApiFeatures ? (
                       <DropdownLink href={route('api-tokens.index')}>
-                        API Tokens
+                          { t('API Tokens') }
                       </DropdownLink>
                     ) : null}
 
@@ -236,7 +237,9 @@ export default function AppLayout({
 
                     {/* <!-- Authentication --> */}
                     <form onSubmit={logout}>
-                      <DropdownLink as="button">Log Out</DropdownLink>
+                      <DropdownLink as="button">
+                          { t('Log Out') }
+                      </DropdownLink>
                     </form>
                   </Dropdown>
                 </div>
@@ -297,7 +300,7 @@ export default function AppLayout({
                 href={route('dashboard')}
                 active={route().current('dashboard')}
               >
-                Dashboard
+                  { t('Dashboard') }
               </ResponsiveNavLink>
             </div>
 
@@ -329,7 +332,7 @@ export default function AppLayout({
                   href={route('profile.show')}
                   active={route().current('profile.show')}
                 >
-                  Profile
+                    { t('Profile') }
                 </ResponsiveNavLink>
 
                 {page.props.jetstream.hasApiFeatures ? (
@@ -337,13 +340,15 @@ export default function AppLayout({
                     href={route('api-tokens.index')}
                     active={route().current('api-tokens.index')}
                   >
-                    API Tokens
+                      { t('API Tokens') }
                   </ResponsiveNavLink>
                 ) : null}
 
                 {/* <!-- Authentication --> */}
                 <form method="POST" onSubmit={logout}>
-                  <ResponsiveNavLink as="button">Log Out</ResponsiveNavLink>
+                  <ResponsiveNavLink as="button">
+                      { t('Log Out') }
+                  </ResponsiveNavLink>
                 </form>
 
                 {/* <!-- Team Management --> */}
@@ -352,7 +357,7 @@ export default function AppLayout({
                     <div className="border-t border-gray-200 dark:border-gray-600"></div>
 
                     <div className="block px-4 py-2 text-xs text-gray-400">
-                      Manage Team
+                        { t('Manage Team') }
                     </div>
 
                     {/* <!-- Team Settings --> */}
@@ -362,7 +367,7 @@ export default function AppLayout({
                       ])}
                       active={route().current('teams.show')}
                     >
-                      Team Settings
+                        { t('Team Settings') }
                     </ResponsiveNavLink>
 
                     {page.props.jetstream.canCreateTeams ? (
@@ -370,7 +375,7 @@ export default function AppLayout({
                         href={route('teams.create')}
                         active={route().current('teams.create')}
                       >
-                        Create New Team
+                          { t('Create New Team') }
                       </ResponsiveNavLink>
                     ) : null}
 
@@ -378,7 +383,7 @@ export default function AppLayout({
 
                     {/* <!-- Team Switcher --> */}
                     <div className="block px-4 py-2 text-xs text-gray-400">
-                      Switch Teams
+                        { t('Switch Teams') }
                     </div>
                     {page.props.auth.user?.all_teams?.map(team => (
                       <form onSubmit={e => switchToTeam(e, team)} key={team.id}>

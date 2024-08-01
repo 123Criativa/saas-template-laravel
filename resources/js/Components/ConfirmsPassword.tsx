@@ -6,6 +6,7 @@ import DialogModal from '@/Components/DialogModal';
 import InputError from '@/Components/InputError';
 import { Input } from '@/shadcn/ui/input';
 import { Button } from '@/shadcn/ui/button';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   title?: string;
@@ -22,6 +23,7 @@ export default function ConfirmsPassword({
                                            onConfirm,
                                            children,
                                          }: PropsWithChildren<Props>) {
+  const { t } = useLaravelReactI18n();
   const route = useRoute();
   const [confirmingPassword, setConfirmingPassword] = useState(false);
   const [form, setForm] = useState({
@@ -74,15 +76,15 @@ export default function ConfirmsPassword({
       <span onClick={startConfirmingPassword}>{children}</span>
 
       <DialogModal isOpen={confirmingPassword} onClose={closeModal}>
-        <DialogModal.Content title={title}>
-          {content}
+        <DialogModal.Content title={t(title!)}>
+          {t(content!)}
 
           <div className="mt-4">
             <Input
               ref={passwordRef}
               type="password"
               className="mt-1 block w-3/4"
-              placeholder="Password"
+              placeholder={ t('Password') }
               value={form.password}
               onChange={e =>
                 setForm({ ...form, password: e.currentTarget.value })
@@ -94,14 +96,16 @@ export default function ConfirmsPassword({
         </DialogModal.Content>
 
         <DialogModal.Footer>
-          <Button variant="secondary" onClick={closeModal}>Cancel</Button>
+          <Button variant="secondary" onClick={closeModal}>
+              { t('Cancel') }
+          </Button>
 
           <Button
             className={classNames('ml-2', { 'opacity-25': form.processing })}
             onClick={confirmPassword}
             disabled={form.processing}
           >
-            {button}
+            {t(button!)}
           </Button>
         </DialogModal.Footer>
       </DialogModal>

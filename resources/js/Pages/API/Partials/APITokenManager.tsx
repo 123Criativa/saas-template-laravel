@@ -15,6 +15,7 @@ import { Button } from '@/shadcn/ui/button';
 import { Label } from '@/shadcn/ui/label';
 import { Input } from '@/shadcn/ui/input';
 import { Checkbox } from '@/shadcn/ui/checkbox';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   tokens: ApiToken[];
@@ -27,6 +28,7 @@ export default function APITokenManager({
                                           availablePermissions,
                                           defaultPermissions,
                                         }: Props) {
+  const { t } = useLaravelReactI18n();
   const route = useRoute();
   const createApiTokenForm = useForm({
     name: '',
@@ -95,17 +97,15 @@ export default function APITokenManager({
       {/* <!-- Generate API Token --> */}
       <FormSection
         onSubmit={createApiToken}
-        title={'Create API Token'}
-        description={
-          'API tokens allow third-party services to authenticate with our application on your behalf.'
-        }
+        title={ t('Create API Token') }
+        description={ t('API tokens allow third-party services to authenticate with our application on your behalf.') }
         renderActions={() => (
           <>
             <ActionMessage
               on={createApiTokenForm.recentlySuccessful}
               className="mr-3"
             >
-              Created.
+                { t('Created.') }
             </ActionMessage>
 
             <Button
@@ -114,14 +114,16 @@ export default function APITokenManager({
               })}
               disabled={createApiTokenForm.processing}
             >
-              Create
+                { t('Create') }
             </Button>
           </>
         )}
       >
         {/* <!-- Token Name --> */}
         <div className="col-span-6 sm:col-span-4">
-          <Label htmlFor="name">Name</Label>
+          <Label htmlFor="name">
+              { t('Name') }
+          </Label>
           <Input
             id="name"
             type="text"
@@ -141,7 +143,9 @@ export default function APITokenManager({
         {/* <!-- Token Permissions --> */}
         {availablePermissions.length > 0 && (
           <div className="col-span-6">
-            <Label htmlFor="permissions">Permissions</Label>
+            <Label htmlFor="permissions">
+                { t('Permissions') }
+            </Label>
 
             <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
               {availablePermissions.map(permission => (
@@ -186,10 +190,8 @@ export default function APITokenManager({
           {/* <!-- Manage API Tokens --> */}
           <div className="mt-10 sm:mt-0">
             <ActionSection
-              title={'Manage API Tokens'}
-              description={
-                'You may delete any of your existing tokens if they are no longer needed.'
-              }
+              title={ t('Manage API Tokens') }
+              description={t('You may delete any of your existing tokens if they are no longer needed.')}
             >
               {/* <!-- API Token List --> */}
               <div className="space-y-6">
@@ -205,7 +207,7 @@ export default function APITokenManager({
                     <div className="flex items-center">
                       {token.last_used_ago && (
                         <div className="text-sm text-gray-400">
-                          Last used {token.last_used_ago}
+                            { t('Last used') } {token.last_used_ago}
                         </div>
                       )}
 
@@ -214,7 +216,7 @@ export default function APITokenManager({
                           className="cursor-pointer ml-6 text-sm"
                           onClick={() => manageApiTokenPermissions(token)}
                         >
-                          Permissions
+                            { t('Permissions') }
                         </Button>
                       ) : null}
 
@@ -222,7 +224,7 @@ export default function APITokenManager({
                         className="cursor-pointer ml-6 text-sm text-red-500"
                         onClick={() => confirmApiTokenDeletion(token)}
                       >
-                        Delete
+                          { t('Delete') }
                       </Button>
                     </div>
                   </div>
@@ -238,10 +240,9 @@ export default function APITokenManager({
         isOpen={displayingToken}
         onClose={() => setDisplayingToken(false)}
       >
-        <DialogModal.Content title={'API Token'}>
+        <DialogModal.Content title={ t('API Token') }>
           <div>
-            Please copy your new API token. For your security, it won't be shown
-            again.
+              { t('Please copy your new API token. For your security, it won\'t be shown again.') }
           </div>
 
           <div className="mt-4 bg-gray-100 dark:bg-gray-900 px-4 py-2 rounded font-mono text-sm text-gray-500">
@@ -250,7 +251,7 @@ export default function APITokenManager({
         </DialogModal.Content>
         <DialogModal.Footer>
           <Button variant="secondary" onClick={() => setDisplayingToken(false)}>
-            Close
+              { t('Close') }
           </Button>
         </DialogModal.Footer>
       </DialogModal>
@@ -260,7 +261,7 @@ export default function APITokenManager({
         isOpen={!!managingPermissionsFor}
         onClose={() => setManagingPermissionsFor(null)}
       >
-        <DialogModal.Content title={'API Token Permissions'}>
+        <DialogModal.Content title={ t('API Token Permissions') }>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {availablePermissions.map(permission => (
               <div key={permission}>
@@ -300,7 +301,7 @@ export default function APITokenManager({
         </DialogModal.Content>
         <DialogModal.Footer>
           <Button variant="secondary" onClick={() => setManagingPermissionsFor(null)}>
-            Cancel
+              { t('Cancel') }
           </Button>
 
           <Button
@@ -310,7 +311,7 @@ export default function APITokenManager({
             })}
             disabled={updateApiTokenForm.processing}
           >
-            Save
+              { t('Save') }
           </Button>
         </DialogModal.Footer>
       </DialogModal>
@@ -320,12 +321,12 @@ export default function APITokenManager({
         isOpen={!!apiTokenBeingDeleted}
         onClose={() => setApiTokenBeingDeleted(null)}
       >
-        <ConfirmationModal.Content title={'Delete API Token'}>
-          Are you sure you would like to delete this API token?
+        <ConfirmationModal.Content title={ t('Delete API Token') }>
+            { t('Are you sure you would like to delete this API token?') }
         </ConfirmationModal.Content>
         <ConfirmationModal.Footer>
           <Button variant="secondary" onClick={() => setApiTokenBeingDeleted(null)}>
-            Cancel
+              { t('Cancel') }
           </Button>
 
           <Button
@@ -336,7 +337,7 @@ export default function APITokenManager({
             })}
             disabled={deleteApiTokenForm.processing}
           >
-            Delete
+              { t('Delete') }
           </Button>
         </ConfirmationModal.Footer>
       </ConfirmationModal>

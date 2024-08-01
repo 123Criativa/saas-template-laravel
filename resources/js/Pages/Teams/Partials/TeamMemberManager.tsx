@@ -15,6 +15,7 @@ import React, { useState } from 'react';
 import { Button } from '@/shadcn/ui/button';
 import { Label } from '@/shadcn/ui/label';
 import { Input } from '@/shadcn/ui/input';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface UserMembership extends User {
   membership: {
@@ -36,6 +37,7 @@ export default function TeamMemberManager({
                                             availableRoles,
                                             userPermissions,
                                           }: Props) {
+  const { t } = useLaravelReactI18n();
   const route = useRoute();
   const addTeamMemberForm = useForm({
     email: '',
@@ -125,17 +127,15 @@ export default function TeamMemberManager({
           {/* <!-- Add Team Member --> */}
           <FormSection
             onSubmit={addTeamMember}
-            title={'Add Team Member'}
-            description={
-              'Add a new team member to your team, allowing them to collaborate with you.'
-            }
+            title={ t('Add Team Member') }
+            description={t('Add a new team member to your team, allowing them to collaborate with you.') }
             renderActions={() => (
               <>
                 <ActionMessage
                   on={addTeamMemberForm.recentlySuccessful}
                   className="mr-3"
                 >
-                  Added.
+                    { t('Added.') }
                 </ActionMessage>
 
                 <Button
@@ -144,15 +144,14 @@ export default function TeamMemberManager({
                   })}
                   disabled={addTeamMemberForm.processing}
                 >
-                  Add
+                    { t('Add') }
                 </Button>
               </>
             )}
           >
             <div className="col-span-6">
               <div className="max-w-xl text-sm text-gray-600 dark:text-gray-400">
-                Please provide the email address of the person you would like to
-                add to this team.
+                  { t('Please provide the email address of the person you would like to add to this team.') }
               </div>
             </div>
 
@@ -177,7 +176,9 @@ export default function TeamMemberManager({
             {/* <!-- Role --> */}
             {availableRoles.length > 0 ? (
               <div className="col-span-6 lg:col-span-4">
-                <Label htmlFor="roles">Role</Label>
+                <Label htmlFor="roles">
+                    { t('Role') }
+                </Label>
                 <InputError
                   message={addTeamMemberForm.errors.role}
                   className="mt-2"
@@ -260,9 +261,9 @@ export default function TeamMemberManager({
           <div className="mt-10 sm:mt-0" />
 
           <ActionSection
-            title={'Pending Team Invitations'}
+            title={ t('Pending Team Invitations')}
             description={
-              'These people have been invited to your team and have been sent an invitation email. They may join the team by accepting the email invitation.'
+              t('These people have been invited to your team and have been sent an invitation email. They may join the team by accepting the email invitation.')
             }
           >
             {/* <!-- Pending Team Member Invitation List --> */}
@@ -283,7 +284,7 @@ export default function TeamMemberManager({
                         className="cursor-pointer ml-6 text-sm text-red-500 focus:outline-none"
                         onClick={() => cancelTeamInvitation(invitation)}
                       >
-                        Cancel
+                          { t('Cancel') }
                       </button>
                     ) : null}
                   </div>
@@ -302,8 +303,8 @@ export default function TeamMemberManager({
           <div className="mt-10 sm:mt-0" />
 
           <ActionSection
-            title={'Team Members'}
-            description={'All of the people that are part of this team.'}
+            title={ t('Team Members') }
+            description={ t('All of the people that are part of this team.') }
           >
             {/* <!-- Team Member List --> */}
             <div className="space-y-6">
@@ -343,7 +344,7 @@ export default function TeamMemberManager({
                         className="cursor-pointer ml-6 text-sm text-red-500"
                         onClick={confirmLeavingTeam}
                       >
-                        Leave
+                          { t('Leave') }
                       </button>
                     ) : null}
 
@@ -353,7 +354,7 @@ export default function TeamMemberManager({
                         className="cursor-pointer ml-6 text-sm text-red-500"
                         onClick={() => confirmTeamMemberRemoval(user)}
                       >
-                        Remove
+                          { t('Remove') }
                       </button>
                     ) : null}
                   </div>
@@ -369,7 +370,7 @@ export default function TeamMemberManager({
         isOpen={currentlyManagingRole}
         onClose={() => setCurrentlyManagingRole(false)}
       >
-        <DialogModal.Content title={'Manage Role'}></DialogModal.Content>
+        <DialogModal.Content title={ t('Manage Role') }></DialogModal.Content>
         {managingRoleFor ? (
           <div>
             <div
@@ -436,7 +437,7 @@ export default function TeamMemberManager({
         ) : null}
         <DialogModal.Footer>
           <Button variant="secondary" onClick={() => setCurrentlyManagingRole(false)}>
-            Cancel
+              { t('Cancel') }
           </Button>
 
           <Button
@@ -446,7 +447,7 @@ export default function TeamMemberManager({
             })}
             disabled={updateRoleForm.processing}
           >
-            Save
+              { t('Save') }
           </Button>
         </DialogModal.Footer>
       </DialogModal>
@@ -461,7 +462,7 @@ export default function TeamMemberManager({
         </ConfirmationModal.Content>
         <ConfirmationModal.Footer>
           <Button variant="secondary" onClick={() => setConfirmingLeavingTeam(false)}>
-            Cancel
+              { t('Cancel') }
           </Button>
 
           <Button
@@ -472,7 +473,7 @@ export default function TeamMemberManager({
             })}
             disabled={leaveTeamForm.processing}
           >
-            Leave
+              { t('Leave') }
           </Button>
         </ConfirmationModal.Footer>
       </ConfirmationModal>
@@ -482,12 +483,12 @@ export default function TeamMemberManager({
         isOpen={!!teamMemberBeingRemoved}
         onClose={() => setTeamMemberBeingRemoved(null)}
       >
-        <ConfirmationModal.Content title={'Remove Team Member'}>
-          Are you sure you would like to remove this person from the team?
+        <ConfirmationModal.Content title={ t('Remove Team Member') }>
+            { t('Are you sure you would like to remove this person from the team?') }
         </ConfirmationModal.Content>
         <ConfirmationModal.Footer>
           <Button variant="secondary" onClick={() => setTeamMemberBeingRemoved(null)}>
-            Cancel
+              { t('Cancel') }
           </Button>
 
           <Button variant="destructive"
@@ -497,7 +498,7 @@ export default function TeamMemberManager({
                   })}
                   disabled={removeTeamMemberForm.processing}
           >
-            Remove
+              { t('Remove') }
           </Button>
         </ConfirmationModal.Footer>
       </ConfirmationModal>

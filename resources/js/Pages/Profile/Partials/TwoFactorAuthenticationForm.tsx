@@ -10,6 +10,7 @@ import useTypedPage from '@/Hooks/useTypedPage';
 import { Button } from '@/shadcn/ui/button';
 import { Label } from '@/shadcn/ui/label';
 import { Input } from '@/shadcn/ui/input';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   requiresConfirmation: boolean;
@@ -18,6 +19,7 @@ interface Props {
 export default function TwoFactorAuthenticationForm({
                                                       requiresConfirmation,
                                                     }: Props) {
+  const { t } = useLaravelReactI18n();
   const page = useTypedPage();
   const [enabling, setEnabling] = useState(false);
   const [disabling, setDisabling] = useState(false);
@@ -105,38 +107,34 @@ export default function TwoFactorAuthenticationForm({
 
   return (
     <ActionSection
-      title={'Two Factor Authentication'}
-      description={
-        'Add additional security to your account using two factor authentication.'
-      }
+      title={ t('Two Factor Authentication') }
+      description={ t('Add additional security to your account using two factor authentication.') }
     >
       {(() => {
         if (twoFactorEnabled && !confirming) {
           return (
             <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-              You have enabled two factor authentication.
+                { t('You have enabled two factor authentication.') }
             </h3>
           );
         }
         if (confirming) {
           return (
             <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-              Finish enabling two factor authentication.
+                { t('Finish enabling two factor authentication.') }
             </h3>
           );
         }
         return (
           <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
-            You have not enabled two factor authentication.
+              { t('You have not enabled two factor authentication.') }
           </h3>
         );
       })()}
 
       <div className="mt-3 max-w-xl text-sm text-gray-600 dark:text-gray-400">
         <p>
-          When two factor authentication is enabled, you will be prompted for a
-          secure, random token during authentication. You may retrieve this
-          token from your phone's Google Authenticator application.
+            { t('When two factor authentication is enabled, you will be prompted for a secure, random token during authentication. You may retrieve this token from your phone\'s Google Authenticator application.') }
         </p>
       </div>
 
@@ -147,16 +145,11 @@ export default function TwoFactorAuthenticationForm({
               <div className="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
                 {confirming ? (
                   <p className="font-semibold">
-                    To finish enabling two factor authentication, scan the
-                    following QR code using your phone's authenticator
-                    application or enter the setup key and provide the generated
-                    OTP code.
+                      { t('To finish enabling two factor authentication, scan the following QR code using your phone\'s authenticator application or enter the setup key and provide the generated OTP code.') }
                   </p>
                 ) : (
                   <p>
-                    Two factor authentication is now enabled. Scan the following
-                    QR code using your phone's authenticator application or
-                    enter the setup key.
+                      { t('Two factor authentication is now enabled. Scan the following QR code using your phone\'s authenticator application or enter the setup key.') }
                   </p>
                 )}
               </div>
@@ -169,7 +162,7 @@ export default function TwoFactorAuthenticationForm({
               {setupKey && (
                 <div className="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
                   <p className="font-semibold">
-                    Setup Key:{' '}
+                    { t('Setup Key') }:{' '}
                     <span
                       dangerouslySetInnerHTML={{ __html: setupKey || '' }}
                     />
@@ -179,7 +172,9 @@ export default function TwoFactorAuthenticationForm({
 
               {confirming && (
                 <div className="mt-4">
-                  <Label htmlFor="code">Code</Label>
+                  <Label htmlFor="code">
+                      { t('Code') }
+                  </Label>
                   <Input
                     id="code"
                     type="text"
@@ -207,9 +202,7 @@ export default function TwoFactorAuthenticationForm({
             <div>
               <div className="mt-4 max-w-xl text-sm text-gray-600 dark:text-gray-400">
                 <p className="font-semibold">
-                  Store these recovery codes in a secure password manager. They
-                  can be used to recover access to your account if your two
-                  factor authentication device is lost.
+                    { t('Store these recovery codes in a secure password manager. They can be used to recover access to your account if your two factor authentication device is lost.') }
                 </p>
               </div>
 
@@ -233,21 +226,21 @@ export default function TwoFactorAuthenticationForm({
                   className={classNames('mr-3', { 'opacity-25': enabling })}
                   disabled={enabling}
                 >
-                  Confirm
+                    { t('Confirm') }
                 </Button>
               </ConfirmsPassword>
             ) : null}
             {recoveryCodes.length > 0 && !confirming ? (
               <ConfirmsPassword onConfirm={regenerateRecoveryCodes}>
                 <Button className="mr-3" variant="secondary">
-                  Regenerate Recovery Codes
+                    { t('Regenerate Recovery Codes') }
                 </Button>
               </ConfirmsPassword>
             ) : null}
             {recoveryCodes.length === 0 && !confirming ? (
               <ConfirmsPassword onConfirm={showRecoveryCodes}>
                 <Button className="mr-3" variant="secondary">
-                  Show Recovery Codes
+                    { t('Show Recovery Codes') }
                 </Button>
               </ConfirmsPassword>
             ) : null}
@@ -259,7 +252,7 @@ export default function TwoFactorAuthenticationForm({
                   disabled={disabling}
                   variant="secondary"
                 >
-                  Cancel
+                    { t('Cancel') }
                 </Button>
               </ConfirmsPassword>
             ) : (
@@ -269,7 +262,7 @@ export default function TwoFactorAuthenticationForm({
                   className={classNames({ 'opacity-25': disabling })}
                   disabled={disabling}
                 >
-                  Disable
+                    { t('Disable') }
                 </Button>
               </ConfirmsPassword>
             )}
@@ -282,7 +275,7 @@ export default function TwoFactorAuthenticationForm({
                 className={classNames({ 'opacity-25': enabling })}
                 disabled={enabling}
               >
-                Enable
+                  { t('Enable') }
               </Button>
             </ConfirmsPassword>
           </div>

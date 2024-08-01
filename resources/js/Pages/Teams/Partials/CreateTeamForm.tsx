@@ -10,8 +10,10 @@ import classNames from 'classnames';
 import { Label } from '@/shadcn/ui/label';
 import { Input } from '@/shadcn/ui/input';
 import { Button } from '@/shadcn/ui/button';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 export default function CreateTeamForm() {
+  const { t } = useLaravelReactI18n();
   const route = useRoute();
   const page = useTypedPage();
   const form = useForm({
@@ -28,25 +30,25 @@ export default function CreateTeamForm() {
   return (
     <FormSection
       onSubmit={createTeam}
-      title={'Team Details'}
-      description={'Create a new team to collaborate with others on projects.'}
+      title={ t('Team Details') }
+      description={ t('Create a new team to collaborate with others on projects.') }
       renderActions={() => (
         <>
           <ActionMessage on={form.recentlySuccessful} className="mr-3">
-            Saved.
+              { t('Saved.') }
           </ActionMessage>
 
           <Button
             className={classNames({ 'opacity-25': form.processing })}
             disabled={form.processing}
           >
-            Save
+              { t('Save') }
           </Button>
         </>
       )}
     >
       <div className="col-span-6">
-        <InputLabel value="Team Owner" />
+        <InputLabel value={ t('Team Owner') } />
 
         <div className="flex items-center mt-2">
           <img
@@ -67,7 +69,9 @@ export default function CreateTeamForm() {
       </div>
 
       <div className="col-span-6 sm:col-span-4">
-        <Label htmlFor="name">Team Name</Label>
+        <Label htmlFor="name">
+            { t('Team Name') }
+        </Label>
         <Input
           id="name"
           type="text"

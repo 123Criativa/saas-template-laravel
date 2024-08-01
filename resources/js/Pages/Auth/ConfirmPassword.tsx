@@ -7,9 +7,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/sh
 import { Label } from '@/shadcn/ui/label';
 import { Input } from '@/shadcn/ui/input';
 import { Button } from '@/shadcn/ui/button';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 export default function ConfirmPassword() {
   const route = useRoute();
+  const { t } = useLaravelReactI18n();
   const form = useForm({
     password: '',
   });
@@ -23,19 +25,20 @@ export default function ConfirmPassword() {
 
   return (
     <AuthenticationCard>
-      <Head title="Secure Area" />
+      <Head title={ t('Secure Area') } />
 
       <form onSubmit={onSubmit}>
         <Card>
           <CardHeader>
             <CardDescription>
-              This is a secure area of the application. Please
-              confirm your password before continuing.
+                { t('This is a secure area of the application. Please confirm your password before continuing.') }
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="mt-4">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">
+                  { t('Password') }
+              </Label>
 
               <Input
                 id="password"
@@ -54,7 +57,7 @@ export default function ConfirmPassword() {
           </CardContent>
           <CardFooter className="flex items-center justify-end mt-4">
             <Button className="ms-4" disabled={form.processing}>
-              Confirm
+                { t('Confirm') }
             </Button>
           </CardFooter>
         </Card>

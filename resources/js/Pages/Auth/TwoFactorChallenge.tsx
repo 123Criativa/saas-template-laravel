@@ -7,8 +7,10 @@ import InputError from '@/Components/InputError';
 import { Label } from '@/shadcn/ui/label';
 import { Input } from '@/shadcn/ui/input';
 import { Button } from '@/shadcn/ui/button';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 export default function TwoFactorChallenge() {
+  const { t } = useLaravelReactI18n();
   const route = useRoute();
   const [recovery, setRecovery] = useState(false);
   const form = useForm({
@@ -41,18 +43,20 @@ export default function TwoFactorChallenge() {
 
   return (
     <AuthenticationCard>
-      <Head title="Two-Factor Confirmation" />
+      <Head title={ t('Two-Factor Confirmation') } />
 
       <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
         {recovery
-          ? 'Please confirm access to your account by entering one of your emergency recovery codes.'
-          : 'Please confirm access to your account by entering the authentication code provided by your authenticator application.'}
+          ? t('Please confirm access to your account by entering one of your emergency recovery codes.')
+          : t('Please confirm access to your account by entering the authentication code provided by your authenticator application.') }
       </div>
 
       <form onSubmit={onSubmit}>
         {recovery ? (
           <div>
-            <Label htmlFor="recovery_code">Recovery Code</Label>
+            <Label htmlFor="recovery_code">
+                { t('Recovery Code') }
+            </Label>
             <Input
               id="recovery_code"
               type="text"
@@ -68,7 +72,9 @@ export default function TwoFactorChallenge() {
           </div>
         ) : (
           <div>
-            <Label htmlFor="code">Code</Label>
+            <Label htmlFor="code">
+                { t('Code') }
+            </Label>
             <Input
               id="code"
               type="text"
@@ -90,14 +96,14 @@ export default function TwoFactorChallenge() {
             className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 underline cursor-pointer"
             onClick={toggleRecovery}
           >
-            {recovery ? 'Use an authentication code' : 'Use a recovery code'}
+            {recovery ? t('Use an authentication code') : t('Use a recovery code')}
           </button>
 
           <Button
             className={classNames('ml-4', { 'opacity-25': form.processing })}
             disabled={form.processing}
           >
-            Log in
+              { t('Log in') }
           </Button>
         </div>
       </form>

@@ -7,6 +7,7 @@ import { Label } from '@/shadcn/ui/label';
 import { Input } from '@/shadcn/ui/input';
 import { Button } from '@/shadcn/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/shadcn/ui/card';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   token: string;
@@ -15,6 +16,7 @@ interface Props {
 
 export default function ResetPassword({ token, email }: Props) {
   const route = useRoute();
+  const { t } = useLaravelReactI18n();
   const form = useForm({
     token,
     email,
@@ -31,19 +33,23 @@ export default function ResetPassword({ token, email }: Props) {
 
   return (
     <AuthenticationCard>
-      <Head title="Reset Password" />
+      <Head title={ t('Reset Password') } />
 
       <form onSubmit={onSubmit}>
         <Card>
           <CardHeader>
-            <CardTitle>Reset Password</CardTitle>
+            <CardTitle>
+                { t('Reset Password') }
+            </CardTitle>
             <CardDescription>
-              Enter your new password
+                { t('Enter your new password') }
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">
+                  { t('Email') }
+              </Label>
 
               <Input
                 id="email"
@@ -61,7 +67,9 @@ export default function ResetPassword({ token, email }: Props) {
             </div>
 
             <div className="mt-4">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">
+                  { t('Password') }
+              </Label>
 
               <Input
                 id="password"
@@ -79,7 +87,7 @@ export default function ResetPassword({ token, email }: Props) {
 
             <div className="mt-4">
               <Label htmlFor="password_confirmation">
-                Confirm Password
+                  { t('Confirm Password') }
               </Label>
 
               <Input
@@ -102,7 +110,9 @@ export default function ResetPassword({ token, email }: Props) {
           </CardContent>
 
           <CardFooter className="justify-end">
-            <Button disabled={form.processing}>Reset Password</Button>
+            <Button disabled={form.processing}>
+                { t('Reset Password') }
+            </Button>
           </CardFooter>
         </Card>
       </form>

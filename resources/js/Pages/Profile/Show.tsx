@@ -8,6 +8,7 @@ import useTypedPage from '@/Hooks/useTypedPage';
 import SectionBorder from '@/Components/SectionBorder';
 import AppLayout from '@/Layouts/AppLayout';
 import { Session } from '@/types';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   sessions: Session[];
@@ -18,14 +19,15 @@ export default function Show({
                                sessions,
                                confirmsTwoFactorAuthentication,
                              }: Props) {
+  const { t } = useLaravelReactI18n();
   const page = useTypedPage();
 
   return (
     <AppLayout
-      title={'Profile'}
+      title={ t('Profile') }
       renderHeader={() => (
         <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          Profile
+            { t('Profile') }
         </h2>
       )}
     >

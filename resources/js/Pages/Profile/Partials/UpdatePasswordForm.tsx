@@ -8,8 +8,10 @@ import InputError from '@/Components/InputError';
 import { Button } from '@/shadcn/ui/button';
 import { Label } from '@/shadcn/ui/label';
 import { Input } from '@/shadcn/ui/input';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 export default function UpdatePasswordForm() {
+  const { t } = useLaravelReactI18n();
   const route = useRoute();
   const form = useForm({
     current_password: '',
@@ -41,27 +43,27 @@ export default function UpdatePasswordForm() {
   return (
     <FormSection
       onSubmit={updatePassword}
-      title={'Update Password'}
-      description={
-        'Ensure your account is using a long, random password to stay secure.'
-      }
+      title={ t('Update Password') }
+      description={t('Ensure your account is using a long, random password to stay secure.') }
       renderActions={() => (
         <>
           <ActionMessage on={form.recentlySuccessful} className="mr-3">
-            Saved.
+              { t('Saved.') }
           </ActionMessage>
 
           <Button
             className={classNames({ 'opacity-25': form.processing })}
             disabled={form.processing}
           >
-            Save
+              { t('Save') }
           </Button>
         </>
       )}
     >
       <div className="col-span-6 sm:col-span-4">
-        <Label htmlFor="current_password">Current Password</Label>
+        <Label htmlFor="current_password">
+            { t('Current Password') }
+        </Label>
         <Input
           id="current_password"
           type="password"
@@ -77,7 +79,9 @@ export default function UpdatePasswordForm() {
       </div>
 
       <div className="col-span-6 sm:col-span-4">
-        <Label htmlFor="password">New Password</Label>
+        <Label htmlFor="password">
+            { t('New Password') }
+        </Label>
         <Input
           id="password"
           type="password"
@@ -92,7 +96,7 @@ export default function UpdatePasswordForm() {
 
       <div className="col-span-6 sm:col-span-4">
         <Label htmlFor="password_confirmation">
-          Confirm Password
+            { t('Confirm Password') }
         </Label>
         <Input
           id="password_confirmation"

@@ -5,6 +5,7 @@ import createServer from '@inertiajs/react/server';
 import { RouteContext } from '@/Hooks/useRoute';
 import route from 'ziggy-js';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { LaravelReactI18nProvider } from 'laravel-react-i18n';
 
 const appName = 'Laravel';
 
@@ -28,7 +29,13 @@ createServer(page =>
       };
       return (
         <RouteContext.Provider value={ssrRoute as any}>
-          <App {...props} />
+            <LaravelReactI18nProvider
+                locale={'pt_BR'}
+                fallbackLocale={'en'}
+                files={import.meta.glob('/lang/*.json', { eager: true })}
+            >
+                <App {...props} />
+            </LaravelReactI18nProvider>
         </RouteContext.Provider>
       );
     },

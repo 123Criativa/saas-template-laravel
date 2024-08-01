@@ -1,14 +1,17 @@
 import CreateTeamForm from '@/Pages/Teams/Partials/CreateTeamForm';
 import AppLayout from '@/Layouts/AppLayout';
 import React from 'react';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 export default function Create() {
+  const { t } = useLaravelReactI18n();
+
   return (
     <AppLayout
-      title="Create Team"
+      title={ t('Create Team') }
       renderHeader={() => (
         <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-          Create Team
+            { t('Create Team') }
         </h2>
       )}
     >

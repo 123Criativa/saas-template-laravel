@@ -3,7 +3,7 @@ services:
     networks:
       development:
         aliases:
-          - jetstream-react-app.dev.test
+          - jetstream-app.dev.test
     ports:
       - "80:80"
       - "443:443"
@@ -33,7 +33,7 @@ services:
       - mysql
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.laravel.rule=HostRegexp(`erp4success.dev.test`)"
+      - "traefik.http.routers.laravel.rule=HostRegexp(`app.dev.test`)"
       - "traefik.http.routers.laravel.entrypoints=websecure"
       - "traefik.http.routers.laravel.tls=true"
       - "traefik.http.services.laravel.loadbalancer.server.port=8080"
@@ -70,11 +70,11 @@ services:
     volumes:
       - ./.infrastructure/volume_data/mysql/database_data/:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: ${SPIN_MYSQL_DATABASE}
-      MYSQL_USER: ${SPIN_MYSQL_USER}
-      MYSQL_PASSWORD: ${SPIN_MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${SPIN_MYSQL_ROOT_PASSWORD}
-      TZ: ${SPIN_MYSQL_TIMEZONE}
+      MYSQL_DATABASE: "${SPIN_MYSQL_DATABASE:-laravel}"
+      MYSQL_USER: "${SPIN_MYSQL_USER:-db}"
+      MYSQL_PASSWORD: "${SPIN_MYSQL_PASSWORD:-db}"
+      MYSQL_ROOT_PASSWORD: "${SPIN_MYSQL_ROOT_PASSWORD:-root}"
+      TZ: "${SPIN_MYSQL_TIMEZONE:-America/Sao_Paulo}"
     ports:
       - "${SPIN_MYSQL_PORT}:3306"
 

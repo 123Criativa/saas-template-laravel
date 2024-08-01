@@ -9,14 +9,20 @@
   "license": "MIT",
   "require": {
     "php": "^8.2",
+    "ext-libxml": "*",
+    "ext-simplexml": "*",
     "inertiajs/inertia-laravel": "^1.0",
     "laravel/framework": "^11.9",
     "laravel/jetstream": "^5.1",
+    "laravel/pennant": "^1.10",
     "laravel/sanctum": "^4.0",
     "laravel/tinker": "^2.9",
+    "lorisleiva/laravel-actions": "^2.8",
     "tightenco/ziggy": "^2.0"
   },
   "require-dev": {
+    "barryvdh/laravel-debugbar": "^3.13",
+    "barryvdh/laravel-ide-helper": "^3.1",
     "fakerphp/faker": "^1.23",
     "laravel/pint": "^1.13",
     "laravel/sail": "^1.26",
@@ -42,7 +48,11 @@
       "@php artisan package:discover --ansi"
     ],
     "post-update-cmd": [
-      "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+        "@php artisan ide-helper:eloquent",
+        "@php artisan ide-helper:generate",
+        "@php artisan ide-helper:meta",
+        "@php artisan ide-helper:models"
     ],
     "post-root-package-install": [
       "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

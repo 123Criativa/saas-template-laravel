@@ -4,6 +4,7 @@ import useRoute from '@/Hooks/useRoute';
 import AuthenticationCard from '@/Components/AuthenticationCard';
 import { Button } from '@/shadcn/ui/button';
 import { Card, CardContent, CardDescription, CardHeader } from '@/shadcn/ui/card';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 
 interface Props {
   status: string;
@@ -11,6 +12,7 @@ interface Props {
 
 export default function VerifyEmail({ status }: Props) {
   const route = useRoute();
+  const { t } = useLaravelReactI18n();
   const form = useForm({});
   const verificationLinkSent = status === 'verification-link-sent';
 
@@ -21,30 +23,26 @@ export default function VerifyEmail({ status }: Props) {
 
   return (
     <AuthenticationCard>
-      <Head title="Email Verification" />
+      <Head title={ t('Email Verification') } />
 
       <Card>
         <CardHeader>
           <CardDescription>
-            Thanks for signing up! Before getting started, could you
-            verify your email address by clicking on the link we
-            just emailed to you? If you didn't receive the email, we
-            will gladly send you another.
+              { t('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }
           </CardDescription>
         </CardHeader>
 
         <CardContent>
           {status === 'verification-link-sent' && (
             <div className="mb-4 font-medium text-sm text-green-600">
-              A new verification link has been sent to the email
-              address you provided during registration.
+                { t('A new verification link has been sent to the email address you provided during registration.') }
             </div>
           )}
 
           <form onSubmit={onSubmit}>
             <div className="mt-4 flex items-center justify-between">
               <Button disabled={form.processing}>
-                Resend Verification Email
+                  { t('Resend Verification Email') }
               </Button>
 
               <div>
@@ -52,7 +50,7 @@ export default function VerifyEmail({ status }: Props) {
                   href={route('profile.show')}
                   className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                 >
-                  Edit Profile
+                    { t('Edit Profile') }
                 </Link>
               </div>
 
@@ -62,7 +60,7 @@ export default function VerifyEmail({ status }: Props) {
                 as="button"
                 className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Log Out
+                  { t('Log Out') }
               </Link>
             </div>
           </form>
